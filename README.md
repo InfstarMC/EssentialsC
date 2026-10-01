@@ -40,7 +40,7 @@
 - `/hat`
 - `/suicide` `(/die)`
 - `/vanish` `(/v)`
-- `/seen` `(/info)`
+- `/seen` `(/info)` 管理员玩家详细信息查询
 - `/tpsbar`
 - `/essc admin` 管理模式切换
 
