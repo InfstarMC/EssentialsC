@@ -54,8 +54,13 @@ bin/
 .DS_Store
 Thumbs.db
 
-# 测试服务器目录
-test-server/
+# 测试服务器运行目录；保留可复用的 Paper 26.3 启动模板
+test-server/*
+!test-server/paper-26.3/
+test-server/paper-26.3/*
+!test-server/paper-26.3/start.bat
+!test-server/paper-26.3/download-paper.ps1
+!test-server/paper-26.3/eula.txt
 
 # 参考资料目录
 references/

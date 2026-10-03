@@ -58,6 +58,8 @@ jobs:
             java: '25'
           - paper: '26.2'
             java: '25'
+          - paper: '26.3'
+            java: '25'
 
     steps:
       - name: 检出代码

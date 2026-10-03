@@ -10,7 +10,7 @@
 ## 项目定位
 
 - 最低支持版本为 `Paper 1.21.11`
-- 已适配 `Paper 26.2`
+- 已适配 `Paper 26.3`
 - 插件统一使用 Paper 公共 API 和 Java 21 字节码，无需按服务端版本拆分构建
 - 配置按职责拆分：主行为与 SkinBridge、模块开关、菜单布局和语言文本分别管理
 - 支持运行期模块开关，避免为不同功能组合构建多个插件版本
@@ -87,7 +87,7 @@
 
 当前配置按功能职责拆分，避免所有设置堆积在一个文件中：
 
-SkinBridge 默认关闭。使用前需启用 `modules.yml` 中的 `modules.skin-bridge.enabled`，填写 `config.yml` 中的 `skin-bridge.mineskin.api-key`，并至少启用一个 Provider。真实密钥只应填写在服务器运行目录的 `config.yml` 中，不要写入源码或提交到公开仓库。该模块不要求安装 SkinsRestorer。默认支持 InfstarMC 与 LittleSkin；Provider 的 `name` 可自由修改，并会显示在日志和 `/essc skin status <玩家>` 中。生成后的 MineSkin 纹理会按皮肤 URL 缓存到 `skin-cache.yml`，并遵守配置的 TTL。
+SkinBridge 默认关闭。使用前需启用 `modules.yml` 中的 `modules.skin-bridge.enabled`，填写 `config.yml` 中的 `skin-bridge.mineskin.api-key`，并至少启用一个 Provider。真实密钥只应填写在服务器运行目录的 `config.yml` 中，不要写入源码或提交到公开仓库。该模块不要求安装 SkinsRestorer。默认支持 InfstarMC 与自定义 Blessing Skin Provider；Provider 的 `name` 可自由修改，并会显示在日志和 `/essc skin status <玩家>` 中。生成后的 MineSkin 纹理会按皮肤 URL 缓存到 `skin-cache.yml`，并遵守配置的 TTL。升级到配置版本 3 时，旧的 LittleSkin Provider 配置会被自动移除。
 
 - `config.yml`
   - 语言选择
@@ -107,7 +107,7 @@ SkinBridge 默认关闭。使用前需启用 `modules.yml` 中的 `modules.skin-
   - 管理模式文本
   - TPSBar 文本
 
-主配置当前使用 `config-version: 2`。SkinBridge 直接配置在 `config.yml` 中，便捷菜单配置仍保存在独立文件中。
+主配置当前使用 `config-version: 3`。SkinBridge 直接配置在 `config.yml` 中，便捷菜单配置仍保存在独立文件中。
 
 版本变化与升级说明见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -174,18 +174,22 @@ Windows 可使用：
 ./gradlew build
 ./gradlew deployToPaper12111
 ./gradlew deployToPaper262
+./gradlew deployToPaper263
 ./gradlew deployToLeaves262
 ```
 
 ## 本地测试服
 
-项目包含三个本地测试服目录：
+本地测试服目录按需创建，当前已准备 Paper 26.3 测试服：
 
 | 测试服 | 端口 | 部署任务 | 启动脚本 |
 | --- | --- | --- | --- |
 | Paper 1.21.11 | `25566` | `deployToPaper12111` | `test-server/paper-1.21.11/start.bat` |
 | Paper 26.2 | `25567` | `deployToPaper262` | `test-server/paper-26.2/start.bat` |
+| Paper 26.3 | `25569` | `deployToPaper263` | `test-server/paper-26.3/start.bat` |
 | Leaves 26.2 | `25568` | `deployToLeaves262` | `test-server/leaves-26.2/start.bat` |
+
+Paper 26.3 需要 Java 25。启动脚本默认使用系统 `java`，也可以设置 `JAVA_HOME_25` 指向 Java 25 安装目录。
 
 IDEA 运行配置会先构建插件，再由启动脚本复制最新 JAR，并保留插件数据以便测试升级流程。手动执行部署任务会替换 `EssentialsC*.jar` 并删除 `plugins/EssentialsC` 数据目录，用于测试全新安装及默认配置生成。
 

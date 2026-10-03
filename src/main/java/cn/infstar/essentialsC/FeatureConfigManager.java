@@ -19,7 +19,7 @@ import java.nio.file.StandardCopyOption;
  */
 public final class FeatureConfigManager {
 
-    private static final int MAIN_CONFIG_VERSION = 2;
+    private static final int MAIN_CONFIG_VERSION = 3;
 
     private final EssentialsC plugin;
     private final File mainConfigFile;
@@ -45,6 +45,7 @@ public final class FeatureConfigManager {
         mainChanged |= migrateLegacyMainConfig(mainConfig);
         mainChanged |= migrateLegacyDebugSettings(mainConfig);
         mainChanged |= removeRetiredJeiSettings(mainConfig);
+        mainChanged |= removeRetiredSkinProviders(mainConfig);
         if (mainConfig.getInt("config-version", 0) != MAIN_CONFIG_VERSION) {
             mainConfig.set("config-version", MAIN_CONFIG_VERSION);
             mainChanged = true;
@@ -144,6 +145,24 @@ public final class FeatureConfigManager {
         mainConfig.set("jei-sync", null);
         plugin.getLogger().info("已从 config.yml 移除停用的 JEI 配方同步配置。");
         return true;
+    }
+
+    private boolean removeRetiredSkinProviders(FileConfiguration mainConfig) {
+        ConfigurationSection providers = mainConfig.getConfigurationSection("skin-bridge.providers");
+        if (providers == null) {
+            return false;
+        }
+
+        boolean changed = false;
+        for (String providerId : providers.getKeys(false)) {
+            if (!"littleskin".equalsIgnoreCase(providerId)) {
+                continue;
+            }
+            mainConfig.set("skin-bridge.providers." + providerId, null);
+            changed = true;
+            plugin.getLogger().info("已从 config.yml 移除停用的 LittleSkin Provider 配置。");
+        }
+        return changed;
     }
 
     private void copySection(ConfigurationSection source, FileConfiguration target) {

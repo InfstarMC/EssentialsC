@@ -10,7 +10,7 @@ plugins {
 }
 
 group = 'cn.infstar'
-def pluginVersion = providers.gradleProperty('pluginVersion').orElse('1.3.1').get()
+def pluginVersion = providers.gradleProperty('pluginVersion').orElse('1.3.2').get()
 version = pluginVersion
 
 repositories {
@@ -127,4 +127,5 @@ def registerTestServerDeployTask = { String taskName, String serverPath, String 
 
 registerTestServerDeployTask('deployToPaper12111', 'test-server/paper-1.21.11', 'Paper 1.21.11')
 registerTestServerDeployTask('deployToPaper262', 'test-server/paper-26.2', 'Paper 26.2')
+registerTestServerDeployTask('deployToPaper263', 'test-server/paper-26.3', 'Paper 26.3')
 registerTestServerDeployTask('deployToLeaves262', 'test-server/leaves-26.2', 'Leaves 26.2')

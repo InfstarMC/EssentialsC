@@ -635,6 +635,9 @@ public final class SkinBridgeManager implements Listener {
 
         List<SkinProvider> loadedProviders = new ArrayList<>();
         for (String key : providersSection.getKeys(false)) {
+            if ("littleskin".equalsIgnoreCase(key)) {
+                continue;
+            }
             ConfigurationSection providerSection = providersSection.getConfigurationSection(key);
             if (providerSection == null || !providerSection.getBoolean("enabled", false)) {
                 continue;

@@ -35,10 +35,11 @@ class ConfigurationResourcesTest {
             configuration.load(new InputStreamReader(input, StandardCharsets.UTF_8));
 
             if (resourcePath.equals("config.yml")) {
-                assertEquals(2, configuration.getInt("config-version"));
+                assertEquals(3, configuration.getInt("config-version"));
                 assertEquals(5, configuration.getInt("tpa.max-pending-requests"));
                 assertEquals(500, configuration.getInt("skin-bridge.max-generated-cache-entries"));
                 assertTrue(configuration.getString("skin-bridge.mineskin.api-key", "").isBlank());
+                assertFalse(configuration.contains("skin-bridge.providers.littleskin", true));
             }
             if (resourcePath.equals("paper-plugin.yml")) {
                 assertEquals("1.21.11", configuration.getString("api-version"));
